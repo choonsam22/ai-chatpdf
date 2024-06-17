@@ -3,4 +3,4 @@ langchain
 langchain-google-genai
 langchain-community
 openai
-chromadb
+faiss-cpu
