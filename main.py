@@ -21,7 +21,7 @@ st.title("세아제강 AI Service")
 st.write("---")
 
 # 샘플 파일 로드
-loader = PyPDFLoader('payment.pdf')
+loader = PyPDFLoader('API 5L.pdf')
 documents = loader.load_and_split()
 
 text_splitter = CharacterTextSplitter(
