@@ -1,9 +1,6 @@
+streamlit
 langchain
-langchain_google_genai
+langchain-google-genai
 langchain-community
 openai
-pypdf
-streamlit
-tiktoken
-pysqlite3-binary
 chromadb
