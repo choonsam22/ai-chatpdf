@@ -49,8 +49,6 @@ if st.button('질문하기'):
             # 프롬프트 템플릿 설정
             system_template = """
             Use the following pieces of context to answer the users question.
-            If there is no leave, say "휴가 없음".
-            If there is no condolence money, say "경조금 없음".
             If you don't know the answer, just say that "I don't know", don't try to make up an answer.
             ----------------
             {summaries}
