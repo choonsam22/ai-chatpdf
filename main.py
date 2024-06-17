@@ -19,6 +19,12 @@ os.environ["USER_AGENT"] = "my_user_agent"
 # 제목 설정
 st.title("세아제강 AI Service")
 st.write("---")
+st.markdown(
+    """
+    ### 세아제강 AI에게 질문해보세요
+    아래에 질문을 입력하고 "질문하기" 버튼을 눌러주세요. AI가 답변을 제공해드립니다.
+    """
+)
 
 # 샘플 파일 로드
 loader = PyPDFLoader('payment.pdf')
@@ -38,16 +44,6 @@ embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 # Vector DB 설정 (FAISS 사용)
 vector_store = FAISS.from_documents(texts, embeddings)
 retriever = vector_store.as_retriever(search_kwargs={"k": 3})
-
-# 제목 설정
-st.title("세아제강 AI Service")
-st.write("---")
-st.markdown(
-    """
-    ### 세아제강 AI에게 질문해보세요
-    아래에 질문을 입력하고 "질문하기" 버튼을 눌러주세요. AI가 답변을 제공해드립니다.
-    """
-)
 
 if st.button('질문하기'):
     with st.spinner('Wait for it...'):
