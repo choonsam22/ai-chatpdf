@@ -16,7 +16,7 @@ api_key = 'AIzaSyBZ1i_UKI0FqchGh3nOombiVheJ-HDL8_Q'
 os.environ["GOOGLE_API_KEY"] = api_key
 os.environ["USER_AGENT"] = "my_user_agent"
 
-#제목
+# 제목 설정
 st.title("세아제강 AI Service")
 st.write("---")
 
@@ -74,5 +74,5 @@ if st.button('질문하기'):
             )
 
             # 결과 확인
-            result = chain.invoke({"query": query})
+            result = chain({"question": query})
             st.write(result['answer'])
