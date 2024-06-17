@@ -49,7 +49,6 @@ if st.button('질문하기'):
             # 프롬프트 템플릿 설정
             system_template = """
             Use the following pieces of context to answer the users question.
-            Given the following summaries of a long document and a question, create a final answer with references ("SOURCES"), use "SOURCES" in capital letters regardless of the number of sources.
             If you don't know the answer, just say that "I don't know", don't try to make up an answer.
             ----------------
             {summaries}
