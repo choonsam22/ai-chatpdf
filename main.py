@@ -1,7 +1,3 @@
-# __import__('pysqlite3')
-# import sys
-# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-
 import os
 import streamlit as st 
 from langchain_community.document_loaders import PyPDFLoader
@@ -41,44 +37,47 @@ texts = text_splitter.split_documents(documents)
 embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
 # Vector DB 설정 (Chroma 사용)
-vector_store = Chroma.from_documents(texts, embeddings)
-retriever = vector_store.as_retriever(search_kwargs={"k": 3})
+try:
+    vector_store = Chroma.from_documents(texts, embeddings)
+    retriever = vector_store.as_retriever(search_kwargs={"k": 3})
 
-# 질문 입력 UI
-st.header("세아 AI에게 질문해보세요!!")
-query = st.text_input('질문을 입력하세요')
+    # 질문 입력 UI
+    st.header("세아 AI에게 질문해보세요!!")
+    query = st.text_input('질문을 입력하세요')
 
-if st.button('질문하기'):
-    with st.spinner('Wait for it...'):
-        if query:
-            # 프롬프트 템플릿 설정
-            system_template = """
-            Use the following pieces of context to answer the users question shortly.
-            Given the following summaries of a long document and a question, create a final answer with references ("SOURCES"), use "SOURCES" in capital letters regardless of the number of sources.
-            If you don't know the answer, just say that "I don't know", don't try to make up an answer.
-            ----------------
-            {summaries}
-            You MUST answer in Korean and in Markdown format:"""
-            messages = [
-                SystemMessagePromptTemplate.from_template(system_template),
-                HumanMessagePromptTemplate.from_template("{question}")
-            ]
-            prompt = ChatPromptTemplate.from_messages(messages)
+    if st.button('질문하기'):
+        with st.spinner('Wait for it...'):
+            if query:
+                # 프롬프트 템플릿 설정
+                system_template = """
+                Use the following pieces of context to answer the users question shortly.
+                Given the following summaries of a long document and a question, create a final answer with references ("SOURCES"), use "SOURCES" in capital letters regardless of the number of sources.
+                If you don't know the answer, just say that "I don't know", don't try to make up an answer.
+                ----------------
+                {summaries}
+                You MUST answer in Korean and in Markdown format:"""
+                messages = [
+                    SystemMessagePromptTemplate.from_template(system_template),
+                    HumanMessagePromptTemplate.from_template("{question}")
+                ]
+                prompt = ChatPromptTemplate.from_messages(messages)
 
-            # 모델 학습 설정 (Google Generative AI 사용)
-            chain_type_kwargs = {"prompt": prompt}
-            llm = ChatGoogleGenerativeAI(model="gemini-pro",
-                                         temperature=0.4,
-                                         convert_system_message_to_human=True)
-            chain = RetrievalQAWithSourcesChain.from_chain_type(
-                llm=llm,
-                chain_type="stuff",
-                retriever=retriever,
-                return_source_documents=True,
-                chain_type_kwargs=chain_type_kwargs
-            )
+                # 모델 학습 설정 (Google Generative AI 사용)
+                chain_type_kwargs = {"prompt": prompt}
+                llm = ChatGoogleGenerativeAI(model="gemini-pro",
+                                             temperature=0.4,
+                                             convert_system_message_to_human=True)
+                chain = RetrievalQAWithSourcesChain.from_chain_type(
+                    llm=llm,
+                    chain_type="stuff",
+                    retriever=retriever,
+                    return_source_documents=True,
+                    chain_type_kwargs=chain_type_kwargs
+                )
 
-            # 결과 확인
-            result = chain.invoke(query)
-            st.write(result['answer'])
+                # 결과 확인
+                result = chain.invoke({"query": query})
+                st.write(result['answer'])
 
+except Exception as e:
+    st.error(f"An error occurred: {str(e)}")
