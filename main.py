@@ -1,5 +1,5 @@
 import os
-import streamlit as st 
+import streamlit as st
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from langchain.text_splitter import CharacterTextSplitter
@@ -19,19 +19,13 @@ os.environ["USER_AGENT"] = "my_user_agent"
 # 제목 설정
 st.title("세아제강 AI Service")
 st.write("---")
-st.markdown(
-    """
-    ### 세아제강 AI에게 질문해보세요
-    아래에 질문을 입력하고 "질문하기" 버튼을 눌러주세요. AI가 답변을 제공해드립니다.
-    """
-)
 
 # 샘플 파일 로드
 loader = PyPDFLoader('payment.pdf')
 documents = loader.load_and_split()
 
 text_splitter = CharacterTextSplitter(
-    chunk_size=1000, 
+    chunk_size=1000,
     chunk_overlap=200,
     length_function=len,
     is_separator_regex=False,
@@ -45,12 +39,15 @@ embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 vector_store = FAISS.from_documents(texts, embeddings)
 retriever = vector_store.as_retriever(search_kwargs={"k": 3})
 
-# 레이아웃 설정
-col1, col2 = st.columns(2)
-
-with col1:
-    st.header("질문")
-    query = st.text_area('질문을 입력하세요', height=200)
+# 제목 설정
+st.title("세아제강 AI Service")
+st.write("---")
+st.markdown(
+    """
+    ### 세아제강 AI에게 질문해보세요
+    아래에 질문을 입력하고 "질문하기" 버튼을 눌러주세요. AI가 답변을 제공해드립니다.
+    """
+)
 
 if st.button('질문하기'):
     with st.spinner('Wait for it...'):
@@ -83,7 +80,4 @@ if st.button('질문하기'):
 
             # 결과 확인
             result = chain({"question": query})
-
-            with col2:
-                st.header("답변")
-                st.write(result['answer'])
+            st.write(result['answer'])
