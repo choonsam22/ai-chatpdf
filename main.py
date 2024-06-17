@@ -16,6 +16,33 @@ api_key = 'AIzaSyBZ1i_UKI0FqchGh3nOombiVheJ-HDL8_Q'
 os.environ["GOOGLE_API_KEY"] = api_key
 os.environ["USER_AGENT"] = "my_user_agent"
 
+# CSS 스타일 추가
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-color: #2E2E2E;
+        color: white;
+    }
+    .stTextInput > div > div > input {
+        background-color: #333333;
+        color: white;
+    }
+    .stButton > button {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .stMarkdown {
+        color: white;
+    }
+    .stHeader {
+        color: white;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # 제목 설정
 st.title("세아제강 AI Service")
 st.write("---")
