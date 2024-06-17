@@ -1,5 +1,6 @@
 langchain
 langchain_google_genai
+langchain-community
 openai
 pypdf
 chromadb
