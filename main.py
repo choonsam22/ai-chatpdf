@@ -1,6 +1,5 @@
 import os
-import streamlit as st
-from PyPDF2 import PdfFileReader
+import streamlit as st 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from langchain.text_splitter import CharacterTextSplitter
@@ -22,15 +21,11 @@ st.title("세아제강 AI Service")
 st.write("---")
 
 # 샘플 파일 로드
-try:
-    loader = PyPDFLoader('payment.pdf')
-    documents = loader.load_and_split()
-except ImportError as e:
-    st.error(f"Error loading PDF: {e}")
-    st.stop()
+loader = PyPDFLoader('payment.pdf')
+documents = loader.load_and_split()
 
 text_splitter = CharacterTextSplitter(
-    chunk_size=1000,
+    chunk_size=1000, 
     chunk_overlap=200,
     length_function=len,
     is_separator_regex=False,
@@ -54,13 +49,11 @@ if st.button('질문하기'):
             # 프롬프트 템플릿 설정
             system_template = """
             Use the following pieces of context to answer the users question.
-            If there is no leave, say "휴가 없음".
-            If there is no condolence money, say "경조금 없음".
-            If you don't know the answer, just say "I don't know", don't try to make up an answer.
+            Given the following summaries of a long document and a question, create a final answer with references ("SOURCES"), use "SOURCES" in capital letters regardless of the number of sources.
+            If you don't know the answer, just say that "I don't know", don't try to make up an answer.
             ----------------
             {summaries}
-            You MUST answer in Korean and in Markdown format:
-            """
+            You MUST answer in Korean and in Markdown format:"""
             messages = [
                 SystemMessagePromptTemplate.from_template(system_template),
                 HumanMessagePromptTemplate.from_template("{question}")
