@@ -4,3 +4,4 @@ langchain-google-genai
 langchain-community
 openai
 faiss-cpu
+pypdf2
