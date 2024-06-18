@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+from PyPDF2 import PdfFileReader
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from langchain.text_splitter import CharacterTextSplitter
@@ -21,8 +22,12 @@ st.title("세아제강 AI Service")
 st.write("---")
 
 # 샘플 파일 로드
-loader = PyPDFLoader('secret.pdf')
-documents = loader.load_and_split()
+try:
+    loader = PyPDFLoader('payment.pdf')
+    documents = loader.load_and_split()
+except ImportError as e:
+    st.error(f"Error loading PDF: {e}")
+    st.stop()
 
 text_splitter = CharacterTextSplitter(
     chunk_size=1000,
@@ -49,10 +54,13 @@ if st.button('질문하기'):
             # 프롬프트 템플릿 설정
             system_template = """
             Use the following pieces of context to answer the users question.
-            If you don't know the answer, just say that "I don't know", don't try to make up an answer.
+            If there is no leave, say "휴가 없음".
+            If there is no condolence money, say "경조금 없음".
+            If you don't know the answer, just say "I don't know", don't try to make up an answer.
             ----------------
             {summaries}
-            You MUST answer in Korean and in Markdown format:"""
+            You MUST answer in Korean and in Markdown format:
+            """
             messages = [
                 SystemMessagePromptTemplate.from_template(system_template),
                 HumanMessagePromptTemplate.from_template("{question}")
