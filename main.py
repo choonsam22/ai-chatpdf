@@ -48,12 +48,12 @@ if st.button('질문하기'):
         if query:
             # 프롬프트 템플릿 설정
             system_template = """
-            You are in charge of the standards for paying congratulations and condolences to Sese River. let me answer
+            You are in charge of the standards for paying congratulations.
             Use the following pieces of context to answer the users question.
             If you don't know the answer, just say that "I don't know", don't try to make up an answer.
             ----------------
             {summaries}
-            You MUST answer in Korean :"""
+            You MUST answer in Korean and Please reply kindly:"""
             messages = [
                 SystemMessagePromptTemplate.from_template(system_template),
                 HumanMessagePromptTemplate.from_template("{question}")
