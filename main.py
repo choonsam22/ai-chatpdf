@@ -51,7 +51,9 @@ if st.button('질문하기'):
             You are in charge of the standards for paying congratulations and condolences to Sese River. let me answer
             Use the following pieces of context to answer the users question.
             If you don't know the answer, just say that "I don't know", don't try to make up an answer.
-            """
+            ----------------
+            {summaries}
+            You MUST answer in Korean :"""
             messages = [
                 SystemMessagePromptTemplate.from_template(system_template),
                 HumanMessagePromptTemplate.from_template("{question}")
