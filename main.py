@@ -12,7 +12,7 @@ from langchain.prompts.chat import (
 )
 
 # 환경 변수 설정
-api_key = 'AIzaSyBZ1i_UKI0FqchGh3nOombiVheJ-HDL8_Q'
+api_key = 'AIzaSyCpEIL65VC6oFtwpdiwIgFmoKmLOmTQsy8'
 os.environ["GOOGLE_API_KEY"] = api_key
 os.environ["USER_AGENT"] = "my_user_agent"
 
