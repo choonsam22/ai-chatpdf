@@ -17,7 +17,7 @@ os.environ["GOOGLE_API_KEY"] = api_key
 os.environ["USER_AGENT"] = "my_user_agent"
 
 st.set_page_config(
-    page_title="FullstackGPT Home",
+    page_title="Seah AI Service",
     page_icon="",
 )
 
