@@ -16,6 +16,11 @@ api_key = 'AIzaSyCpEIL65VC6oFtwpdiwIgFmoKmLOmTQsy8'
 os.environ["GOOGLE_API_KEY"] = api_key
 os.environ["USER_AGENT"] = "my_user_agent"
 
+st.set_page_config(
+    page_title="FullstackGPT Home",
+    page_icon="",
+)
+
 # 제목 설정
 st.title("세아제강 AI Service")
 st.write("---")
