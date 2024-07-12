@@ -18,7 +18,7 @@ os.environ["USER_AGENT"] = "my_user_agent"
 
 #page_config
 st.set_page_config(
-    page_title="FullstackGPT Home",
+    page_title="세아제강 AI Service",
     )
 
 # 제목 설정
