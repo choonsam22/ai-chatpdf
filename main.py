@@ -18,7 +18,7 @@ os.environ["USER_AGENT"] = "my_user_agent"
 
 #page_config
 st.set_page_config(
-    page_title="AI Service",
+    page_title="AI Service"
     )
 
 # 제목 설정
